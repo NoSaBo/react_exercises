@@ -3,16 +3,22 @@ import {Canvas} from './canvas.js';
 
 class Controls extends React.Component {
   state = {
-    texto: '',
+    texto1: '',
+    texto2: '',
+  };
+//Hacer reutiulizable hadleTextChange!!!
+  handleTextChange1 = (e) => {
+    console.log('input :',e.target.value);
+    this.setState({texto1: e.target.value});
   };
 
-  handleTextChange = (e) => {
+  handleTextChange2 = (e) => {
     console.log('input :',e.target.value);
-    this.setState({texto: e.target.value});
+    this.setState({texto2: e.target.value});
   };
 
   handleClickChange = (e) =>  {
-    this.props.onUpdate(parseInt(this.state.texto, 10));
+    this.props.onUpdate(parseInt(this.state.texto1, 10), parseInt(this.state.texto2, 10));
   };
 
   render() {
@@ -20,14 +26,21 @@ class Controls extends React.Component {
       <div className="input">
         <input
           type="text"
-          value={this.state.texto}
-          onChange={this.handleTextChange}
-          style={isButtonDisabled(this.state.texto) &&
-            notEmpty(this.state.texto) ? {borderColor: "#ff0000"} : {}}
+          value={this.state.texto1}
+          onChange={this.handleTextChange1}
+          style={isButtonDisabled(this.state.texto1) &&
+            notEmpty(this.state.texto1) ? {borderColor: "#ff0000"} : {}}
+        />
+        <input
+          type="text"
+          value={this.state.texto2}
+          onChange={this.handleTextChange2}
+          style={isButtonDisabled(this.state.texto2) &&
+            notEmpty(this.state.texto2) ? {borderColor: "#ff0000"} : {}}
         />
         <button
           onClick={this.handleClickChange}
-//          disabled={isButtonDisabled(this.state.texto)}
+          disabled={isButtonDisabled(this.state.texto1) || isButtonDisabled(this.state.texto2)}
         >
           Update
         </button>
@@ -42,8 +55,9 @@ export class Fractal extends React.Component {
       <div>
         <Controls onUpdate={this.props.onUpdate}/>
         <Canvas
-          dimension= {this.props.dimension}
-          n= {calculateN(this.props.dimension)}
+          dimensionA= {this.props.dimensionA}
+          dimensionB= {this.props.dimensionB}
+          n= {calculateN(this.props.dimensionA, this.props.dimensionB)}
         />
       </div>
     );
@@ -59,23 +73,27 @@ function condition(num){
 //  if (num == "") return true;
   if (isNaN(num)) {
     return true;
-  } else num = Number(num);
-
+  } else return false;//num = Number(num);
+/*
   if (num == 0 || num == 1) return true;
   while (num != 1) {
       if (num%2 != 0) return true;
       num = num/2;
   }
   return false;
+*/
 }
 
-function calculateN(dimension) {
-  let i = 0;
-  let dim = dimension;
-  while (dim > 1) {
-      i++;
-      dim = Math.ceil(dim/2);
-      if (dim == 1) i++;
+function calculateN(a, b) {
+  if (calculaten(a) <= calculaten(b)) return calculaten(a) + 1;
+  else return calculaten(b) + 1;
+}
+
+function calculaten(a) {
+  let i=0;
+  while (a > 1) {
+    i++;
+    a = Math.ceil(a/2);
   }
   return i;
 }

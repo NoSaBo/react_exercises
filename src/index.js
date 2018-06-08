@@ -7,13 +7,15 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      dimension: 512,
+      dimensionA: 512,
+      dimensionB: 512,
     };
   }
 
-  lambda(nuevaDimension) {
+  lambda(nuevaDimensionA, nuevaDimensionB) {
     this.setState({
-      dimension: nuevaDimension,
+      dimensionA: nuevaDimensionA,
+      dimensionB: nuevaDimensionB,
     });
   }
 
@@ -21,8 +23,9 @@ class App extends React.Component {
       return(
         <div>
           <Fractal
-            dimension= {Number(this.state.dimension)}
-            onUpdate={(nuevaDimension) => this.lambda(nuevaDimension)}
+            dimensionA= {Number(this.state.dimensionA)}
+            dimensionB= {Number(this.state.dimensionB)}
+            onUpdate={(nuevaDimensionA, nuevaDimensionB) => this.lambda(nuevaDimensionA, nuevaDimensionB)}
           />
         </div>
       );

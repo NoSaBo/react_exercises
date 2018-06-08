@@ -10,7 +10,7 @@ export class Canvas extends React.Component {
         let children = []
 
         children.push(<td>{i}</td>)
-        children.push(<td>{calculateYellowPixels(i, this.props.dimension)}</td>)
+        children.push(<td>{calculateYellowPixels(i, this.props.dimensionA, this.props.dimensionB)}</td>)
 
         table.push(<tr>{children}</tr>)
       }
@@ -20,7 +20,7 @@ export class Canvas extends React.Component {
   render()  {
       return(
         <div>
-          <div className="canvas" style={{width: this.props.dimension, height: this.props.dimension}}>
+          <div className="canvas" style={{width: this.props.dimensionA, height: this.props.dimensionB}}>
             <Imagenes
               n= {this.props.n}
             />
@@ -41,15 +41,17 @@ export class Canvas extends React.Component {
   }
 }
 
-function calculateYellowPixels(n, dimension) {
-  let size = dimension;
+function calculateYellowPixels(n, dimensionA, dimensionB) {
+  let a = dimensionA;
+  let b = dimensionB;
   let  area = 0;
   let count = 0;
-  for (let i = 1; i <= n; i++) {
-    if (size == 1) area = 1;
-    else area = Math.floor(size / 2);
-    size = size - Math.floor(size / 2);
-    count = count + Math.ceil(area ** 2);
+  for (let i = 0; i < n; i++) {
+    if(a == 1 || b ==1) area = a * b;
+    else area = Math.floor(a / 2) * Math.floor(b / 2);
+    count += area;
+    a = Math.ceil(a/2);
+    b = Math.ceil(b/2);
   }
 return count;
 }
