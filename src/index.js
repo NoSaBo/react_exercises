@@ -1,32 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import cookie from 'react-cookies';
 import './index.css';
-import {Fractal} from './fractal.js';
+import {Navigator} from './navigator.js';
+import {FractalApp} from './fractalapp.js';
+import {ProcessesApp} from './processesapp.js';
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      dimensionA: 512,
-      dimensionB: 512,
+      tabname: "fractal",
     };
   }
 
-  lambda(nuevaDimensionA, nuevaDimensionB) {
-    this.setState({
-      dimensionA: nuevaDimensionA,
-      dimensionB: nuevaDimensionB,
-    });
+  lambda(name) {
+    this.setState({tabname: name});
   }
 
   render()  {
+    let elementTab;
+    if (this.state.tabname == "fractal") {
+      elementTab = (
+        <div>
+          <FractalApp />
+        </div>
+      )
+    } else if (this.state.tabname == "processes") {
+      elementTab = (
+        <div>
+          <ProcessesApp />
+        </div>
+      )
+    }
+
       return(
         <div>
-          <Fractal
-            dimensionA= {Number(this.state.dimensionA)}
-            dimensionB= {Number(this.state.dimensionB)}
-            onUpdate={(nuevaDimensionA, nuevaDimensionB) => this.lambda(nuevaDimensionA, nuevaDimensionB)}
-          />
+          <div>
+            <Navigator
+              onClick={(name) => this.lambda(name)}
+            />
+          </div>
+          <div>
+            {elementTab}
+          </div>
         </div>
       );
   }

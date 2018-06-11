@@ -44,7 +44,24 @@ button, input {
   flex: 1;
 }
 
+.navigator {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  background-color: #a23600;
+}
+
+.navigator:hover {opacity: 50%;}
+
+.tab {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  justify-content: center;
+}
+
 .input {
+    justify-content: center;
     margin-top: 5%;
     margin-bottom: 5%;
 }

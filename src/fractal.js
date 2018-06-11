@@ -2,10 +2,15 @@ import React from 'react';
 import {Canvas} from './canvas.js';
 
 class Controls extends React.Component {
-  state = {
-    texto1: '',
-    texto2: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      texto1: ''
+      + this.props.dimensionA,
+      texto2: ''
+      + this.props.dimensionB,
+    }
+  }
 //Hacer reutiulizable hadleTextChange!!!
   handleTextChange1 = (e) => {
     console.log('input :',e.target.value);
@@ -23,7 +28,7 @@ class Controls extends React.Component {
 
   render() {
     return (
-      <div className="input">
+      <div className="input row">
         <input
           type="text"
           value={this.state.texto1}
@@ -53,7 +58,11 @@ export class Fractal extends React.Component {
   render() {
     return(
       <div>
-        <Controls onUpdate={this.props.onUpdate}/>
+        <Controls
+          dimensionA= {this.props.dimensionA}
+          dimensionB= {this.props.dimensionB}
+          onUpdate={this.props.onUpdate}
+        />
         <Canvas
           dimensionA= {this.props.dimensionA}
           dimensionB= {this.props.dimensionB}
